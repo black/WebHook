@@ -27,12 +27,7 @@ app.use((req, res, next) => {
     }
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`))
-
-app.get("/", (req, res) => {
-    res.send(); 
-});
-
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`)) 
 
 app.post("/hook", (req, res) => {
     myEmitter.emit('notification', req.body.status);
