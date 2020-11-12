@@ -5,8 +5,8 @@ A demo for WebHooks
 
 fake app where you can update the status of the app from browser
 
-  1. To update the status post to localhost:3000/updateStatus using Jquery
-  2. When data received on the endpoint it makes a post request using node-fetch to localhost:1000/hook
+  1. Make post request from the browser to localhost:3000/updateStatus using JQuery
+  2. When data received on the endpoint on the node server, it makes a post request to a client hook url (localhost:1000/hook)  using node-fetch module 
 
 ### Client
 
