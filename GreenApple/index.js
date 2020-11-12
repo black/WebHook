@@ -30,7 +30,7 @@ const processSomething = callback => {
     setTimeout(callback, 5000);
 }
 
-app.post("/updateDate", (req, res) => {
+app.post("/updateStatus", (req, res) => {
     console.log("Status", req.body.data);
     fetch("http://localhost:1000/hook", { // client hook url
             method: 'POST',

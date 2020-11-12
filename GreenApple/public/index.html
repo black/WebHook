@@ -20,7 +20,7 @@
 		$('#update').on('click',function(){
 			let valu = $('#tbox').val();
 			console.log('input',valu);
-			$.post('/updateDate',{data:valu},function(data){
+			$.post('/updateStatus',{data:valu},function(data){
 					console.log('res',data);
 			});
 		});
