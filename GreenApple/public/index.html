@@ -4,26 +4,108 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Green Apple API updater</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			padding: 2%;
+		}
+
+		.card {
+			width: 400px;
+			border-radius: 5px;
+			border: 1px solid #eee;
+			padding: 10px;
+			background-color: #f8f8f8;
+		}
+
+		input,select {
+			padding: 5px;
+		}
+
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		li {
+			padding: 5px;
+			border-bottom: 1px solid blue;
+		}
+
+		h5, p{
+			padding: 5px 0;
+		}
+	</style>
 </head>
+
 <body>
 	<h1>Green Apple Update Status</h1>
-	<div class="result">Data</div>
-	<select name="" id="tbox">
-		<option value="sent">Sent</option>
-		<option value="pending">Pending</option>
-		<option value="success">Success</option>
-		<option value="failed">Failed</option>
-	</select>
-	<input id="update" type="button" value="submit">
+	<div class="card">
+		<select name="" id="tbox">
+			<option value="sent">Sent</option>
+			<option value="pending">Pending</option>
+			<option value="success">Success</option>
+			<option value="failed">Failed</option>
+		</select>
+		<input id="update" type="button" value="SUBMIT">
+	</div>
+	<div class="card">
+		<h5>Give me your hookup URL</h5>
+		<input id="urlbox" type="text">
+		<input id="add" type="button" value="ADD"> 
+		<p id="statusBox"></p>
+		<ul id="urlist"></ul>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script> 
-		$('#update').on('click',function(){
+	<script>
+		// update status
+		$('#update').on('click', function () {
 			let valu = $('#tbox').val();
-			console.log('input',valu);
-			$.post('/updateStatus',{data:valu},function(data){
-					console.log('res',data);
+			console.log('input', valu);
+			$.post('/updateStatus', {
+				data: valu
+			}, function (data) {
+				console.log('res', data);
 			});
 		});
+
+		// add urls 
+		let elm = $('#urlist');
+		let urlbox = $('#urlbox');
+		let statusBox = $('#statusBox');
+
+		$('#add').on('click', function () {
+			let valu = urlbox.val();
+			urlbox.val('');
+			elm.empty();
+			addURL(valu);
+		});
+
+		function addURL(valu) {
+			$.post('/addURL', {
+				data: valu
+			}, function (res) {
+				console.log('', res);
+				getURIList();
+			});
+		}
+
+		function getURIList() {
+			$.get('/allURL', function (res) {
+				console.log('', res);
+				if (res.data.length > 0) {
+					res.data.forEach(uri => {
+						elm.append('<li>' + uri + '</li>');
+					});
+					statusBox.text("");
+				} else {
+					statusBox.text("url list is empty add some urls");
+				}
+			}); 
+		} 
+		getURIList();
 	</script>
 </body>
+
 </html>
